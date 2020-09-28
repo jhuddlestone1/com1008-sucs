@@ -1,0 +1,492 @@
+/*	style.css
+*
+*	COM1008 Web and Internet Technology
+*	Assignment 1
+*
+*	Michael Gardiner & Jamie Huddlestone
+*/
+
+
+/*** Font imports ***/
+
+@font-face {
+	font-family: "OCRA";
+	font-weight: normal;
+	font-style: normal;
+	src: url("../fonts/OCRA.otf");
+	/* OCR-A font based on ISO 1073-1:1976, typeset by Matthew Skala: http://ansuz.sooke.bc.ca/page/fonts#ocra */
+	/* Released by the author into the public domain */
+}
+
+@font-face {
+	font-family: "Font Awesome";
+	font-weight: normal;
+	font-style: normal;
+	src: url("../fonts/fa-solid-900.woff");
+	/* Font Awesome v5.5.0: https://fontawesome.com/ */
+	/* Used under SIL Open Font License 1.1: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL */
+}
+/* ---- For future use ----
+@font-face {
+	font-family: "Font Awesome";
+	font-weight: normal;
+	font-style: italic;
+	src: url("../fonts/fa-regular-400.woff");
+}
+@font-face {
+	font-family: "Font Awesome";
+	font-weight: bold;
+	font-style: normal;
+	src: url("../fonts/fa-brands-400.woff");
+} ---------------------- */
+
+
+/*** Tags ***/
+
+body:before {		/* Imported SVG background; needs to be in a pseudo-element to apply opacity to it! */
+	content: "";
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.03125;
+	background-image: url("../img/back.svg");
+	/* by GDJ, on openclipart.org: https://openclipart.org/detail/289068/seamless-circuit-texture */
+	/* Used under Creative Commons Zero License 1.0: http://creativecommons.org/publicdomain/zero/1.0/ */
+}
+
+body {
+	margin: 0;
+	overflow-x: hidden;		/* Just to stop pointless appearance of horizontal scroll bars on some browsers. */
+	font-family: "DejaVu Sans Mono", "Vera Sans Mono", "Menlo", "Andale Mono", "Droid Sans Mono", "Consolas", "Inconsolata", "Liberation Mono", "Lucida Console", "Courier New", "Courier", monospace;
+}
+
+body.splash:before, body.home:before {
+	opacity: 0.125;			/* Strengthen circuit pattern on dark background */
+}
+
+body.splash, body.home {
+	background-color: midnightblue;
+	background-attachment: fixed;
+	background-image: radial-gradient(circle, transparent, black);
+}
+
+a {
+	text-decoration: none;
+	font-weight: bold;
+	color: midnightblue;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+h1 {
+	margin: 0 0 1rem;
+	font-size: 15vmin;
+	font-family: "OCRA", serif;
+}
+
+@media (min-width: 600px) and (min-height: 600px) {
+	h3 {
+		font-size: 4vmin;
+	}
+}
+
+header {
+	z-index: 1001;		/* To sit above all other elements, including Leaflet map widgets */
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 1.25em;
+	font-family: "San Francisco", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	background-color: rgba(0, 0, 0, 0.75);
+	color: white;
+}
+@media (min-width: 600px) and (min-height: 600px) {
+	header {
+		font-size: 3.5vmin;	
+	}
+}
+
+header>* {
+	display: inline-block;
+	margin: 0.25em;						/* Ensure header child elements have ample room to breathe! */
+}
+
+nav a {
+	font-weight: normal;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	list-style: none;
+}
+
+header nav.bars {
+	float: left;
+	text-align: left;
+	cursor: pointer;
+}
+
+nav.bars ul {
+	position: absolute;
+	top: calc(1.25em + 0.5em);			/* To compensate for padding of header children */
+	left: 0;
+	width: 100%;
+	max-height: 88vmax;
+	overflow-y: scroll;
+	background-color: midnightblue;		/* Overridden by app classes */
+	box-shadow: 0 0 100vmax rgba(0, 0, 0, 0.5);
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: transform 0.1s;
+}
+@media (orientation: landscape) {
+	nav.bars ul {
+		max-height: 88vmin;
+	}
+}
+@media (min-width: 600px) and (min-height: 600px) {
+	nav.bars ul {
+		top: calc(3.5vmin + 0.6666em);	/* To compensate for padding of header children */
+	}
+}
+
+nav.bars li {
+	padding: 0.5em;
+	background-color: white;
+}
+
+nav.bars li:hover {
+	background-color: inherit;
+	color: white;
+}
+
+main {
+	position: relative;
+	max-width: 100vmin;
+	margin: 0 auto;
+	padding: 0 2vmin 4vmin;
+}
+
+.splash main, .home main {
+	max-width: 144vmin;		/* Constrains the app icons to six abreast */
+	text-align: center;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
+input, textarea {
+	display: block;
+	width: 90vmin;
+	margin: 1em 0;
+	border: 1px solid silver;
+	border-radius: 0.5em;
+	padding: 0.5em;
+}
+
+input[type="submit"] {
+	box-shadow: inset -1px -1px 2px silver, inset 1px 1px 2px white;
+	width: 92vmin;
+}
+
+input[type="submit"]:hover {
+	box-shadow: inset 1px 1px 2px silver, inset -1px -1px 2px white;
+}
+
+img {
+	width: 100%;
+}
+@media (min-width: 600px) and (min-height: 600px) {
+	img {
+		float: right;
+		width: 50vmin;
+		margin: 0 0 1em 1em;
+	}
+}
+
+/*** Element IDs ***/
+
+#clock {
+	float: right;
+}
+
+#lock_widget {
+	display: inline-block;
+	position: relative;
+	margin: 10vmin 0;
+	height: 10vmin;
+	border-radius: 8vmin;
+	padding: 2vmin 4vmin 2vmin 2vmin;
+	background-color: rgba(255, 255, 255, 0.5);
+	font-size: 6vmin;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+#lock_widget:hover {
+	box-shadow: 0 0 2vmin rgba(255, 255, 255, 0.25);
+}
+
+#map {
+	position: relative;
+	height: 70vmin;
+	width: 96vmin;
+}
+
+
+/*** Clearfix ***/
+header:after, main>p:after, .apps:after, .clear:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+/*** Icon classes ***/
+
+.lock {
+	position: relative;
+	left: 0;
+	color: white;
+	transition: left 0.3s ease-in;
+}
+
+.lock:before {
+	content: "\f023";	/* lock */
+	display: inline-block;
+	width: 10vmin;
+	height: 10vmin;
+	border-radius: 5vmin;
+	line-height: 1.5;
+	box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5), inset -1px -1px 4px rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.25);
+	font-family: "Font Awesome";
+}
+
+.unlocked:before {
+	content: "\f09c";	/* unlock */	
+}
+
+.bars:before {
+	content: "\f0c9";	/* bars */
+	font-family: "Font Awesome";
+}
+
+
+/*** App icons ***/
+
+.apps li {
+	display: inline-block;
+	width: 16vmin;
+	margin: 2vmin;
+	text-align: center;
+	font-size: 4vmin;
+	font-family: "San Francisco", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	color: white;
+	text-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+	transition: filter 0.05s linear;
+}
+
+.apps li:before {
+	display: block;
+	width: 16vmin;
+	height: 16vmin;
+	margin-bottom: 1vmin;
+	border-radius: 3vmin;
+	line-height: 1.6;
+	font-size: 10vmin;
+	font-family: "Font Awesome";
+	color: white;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+}
+
+.apps li:hover {
+	filter: brightness(1.125);
+}
+
+.apps .eat:before {
+	content: "\f2e7";	/* utensils */
+	background-color: red;
+	background-image: linear-gradient(red, firebrick);
+}
+
+.apps .shop:before {
+	content: "\f290";	/* shopping-bag */
+	background-color: orange;
+	background-image: linear-gradient(orange, darkorange);
+}
+
+.apps .go_out:before {
+	content: "\f57b";	/* glass-martini-alt */
+	background-color: purple;
+	background-image: linear-gradient(purple, indigo);
+}
+
+.apps .work:before {
+	content: "\f108";	/* desktop */
+	background-color: dodgerblue;
+	background-image: linear-gradient(dodgerblue, royalblue);
+}
+
+.apps .contacts:before {
+	content: "\f095";	/* phone */
+	background-color: limegreen;
+	background-image: linear-gradient(lime, limegreen);
+}
+
+.apps .diary:before {
+	content: "\f02d";	/* book */
+	background-color: sienna;
+	background-image: linear-gradient(sienna, saddlebrown);
+}
+
+.apps .access:before{
+	content: "\f193";	/* wheelchair */
+	background-color: deeppink;
+	background-image: linear-gradient(deeppink, mediumvioletred);
+}
+
+.apps .support:before{
+	content: "\f590";	/* headset */
+	background-color: darkturquoise;
+	background-image: linear-gradient(darkturquoise, darkcyan);
+}
+
+.apps .maps:before{
+	content: "\f57d";	/* globe-americas */
+	color: dodgerblue;
+	background-color: white;
+	background-image: linear-gradient(white, gainsboro);
+}
+
+.apps .meet_up:before{
+	content: "\f086";	/* comments */
+	background-color: darkgreen;
+	background-image: linear-gradient(forestgreen, darkgreen);
+}
+
+.apps .politics:before{
+	content: "\f1c3";	/* file-excel */
+	background-color: maroon;
+	background-image: linear-gradient(brown, maroon);
+}
+
+.apps .societies:before{
+	content: "\f121";	/* code */
+	color: limegreen;
+	background-color: darkslategray;
+	background-image: linear-gradient(darkslategray, black);
+}
+
+
+/*** App themes ***/
+
+.eat header, .eat footer, .eat nav.bars ul {
+	background-color: red;
+}
+.eat h1, .eat h2, .eat h3, .eat h4, .eat h5, .eat h6,
+.eat a{
+	color: red;
+}
+
+.shop header, .shop footer, .shop nav.bars ul {
+	background-color: orange;
+}
+.shop h1, .shop h2, .shop h3, .shop h4, .shop h5, .shop h6,
+.shop a {
+	color: orange;
+}
+
+.go_out header, .go_out footer, .go_out nav.bars ul {
+	background-color: purple;
+}
+.go_out h1, .go_out h2, .go_out h3, .go_out h4, .go_out h5, .go_out h6,
+.go_out a {
+	color: purple;
+}
+
+.work header, .work footer, .work nav.bars ul {
+	background-color: dodgerblue;
+}
+.work h1, .work h2, .work h3, .work h4, .work h5, .work h6,
+.work a {
+	color: dodgerblue;
+}
+
+.contacts header, .contacts footer, .contacts nav.bars ul {
+	background-color: limegreen;
+}
+.contacts h1, .contacts h2, .contacts h3, .contacts h4, .contacts h5, .contacts h6,
+.contacts a {
+	color: limegreen;
+}
+
+.diary header, .diary footer, .diary nav.bars ul {
+	background-color: sienna;
+}
+.diary h1, .diary h2, .diary h3, .diary h4, .diary h5, .diary h6,
+.diary a {
+	color: sienna;
+}
+
+.access header, .access footer, .access nav.bars ul {
+	background-color: deeppink;
+}
+.access h1, .access h2, .access h3, .access h4, .access h5, .access h6,
+.access a {
+	color: deeppink;
+}
+
+.support header, .support footer, .support nav.bars ul {
+	background-color: darkcyan;
+}
+.support h1, .support h2, .support h3, .support h4, .support h5, .support h6,
+.support a {
+	color: darkcyan;
+}
+
+.maps header, .maps footer, .maps nav.bars ul {
+	background-color: dodgerblue;
+}
+.maps h1, .maps h2, .maps h3, .maps h4, .maps h5, .maps h6,
+.maps a {
+	color: dodgerblue;
+}
+
+.meet_up header, .meet_up footer, .meet_up nav.bars ul {
+	background-color: darkgreen;
+}
+.meet_up h1, .meet_up h2, .meet_up h3, .meet_up h4, .meet_up h5, .meet_up h6,
+.meet_up a {
+	color: darkgreen;
+}
+
+.politics header, .politics footer, .politics nav.bars ul {
+	background-color: maroon;
+}
+.politics h1, .politics h2, .politics h3, .politics h4, .politics h5, .politics h6,
+.politics a {
+	color: maroon;
+}
+
+.societies header, .societies footer, .societies nav.bars ul {
+	background-color: darkslategray;
+}
+.societies h1, .societies h2, .societies h3, .societies h4, .societies h5, .societies h6,
+.societies a {
+	color: darkslategray;
+}
